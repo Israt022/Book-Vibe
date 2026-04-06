@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData, useParams } from 'react-router';
+import { BookContext } from '../../context/BookProvider';
 
 const BookDetails = () => {
     const {id} = useParams();
-    console.log('id',id);
+    // console.log('id',id);
 
     const books = useLoaderData();
-    console.log('books',books);
+    // console.log('books',books);
 
     const expectedBook = books.find(book => book.bookId == id);
-    console.log(expectedBook,'find id');
+    // console.log(expectedBook,'find id');
     const {
         image,
         bookName,
@@ -22,8 +23,13 @@ const BookDetails = () => {
         rating,
         yearOfPublishing
     } = expectedBook;
+
+    const {handleMarkAsRead,isAdded,storeBook,handleWishList} = useContext(BookContext);
+    console.log(storeBook);
+
+    
     return (
-        <div className="card lg:card-side bg-base-100 shadow-sm container mx-auto mt-5 w-[80%] grid grid-cols-2 my-5">
+        <div className="card grid grid-cols-1 lg:grid-cols-2 lg:card-side bg-base-100 shadow-sm container mx-auto mt-5 w-[80%] grid grid-cols-2 my-5">
             <figure className='p-10 bg-base-300'>
                 <img
                 src={image}
@@ -61,8 +67,12 @@ const BookDetails = () => {
                     </div>
                 </div>
                 <div className="card-actions justify-start">
-                    <button className="btn border-gray-400">Mark as Read</button>
-                    <button className="btn bg-[#50B1C9] text-white">Add to Wishlist</button>
+                    <button 
+                        onClick={() => handleMarkAsRead(expectedBook)}
+                        className={`btn ${isAdded ? 'bg-green-500 text-white' : 'border-gray-400'}`}>
+                            Mark as Read
+                    </button>
+                    <button onClick={() =>handleWishList(expectedBook)} className="btn bg-[#50B1C9] text-white">Add to Wishlist</button>
                 </div>
             </div>
         </div>
