@@ -10,7 +10,7 @@ const Navbar = () => {
             <NavLink to={'/books'} className={({isActive}) => `font-semibold ${isActive ? 'border border-green-500 rounded-lg text-green-500' : ''}`}>Listed Books</NavLink>
         </li>
         <li>
-            <NavLink to={'/readPage'} className={({isActive}) => `font-semibold ${isActive ? 'border border-green-500 rounded-lg text-green-500' : ''}`}>Pages to Read </NavLink>
+            <NavLink to={'/pageReload'} className={({isActive}) => `font-semibold ${isActive ? 'border border-green-500 rounded-lg text-green-500' : ''}`}>Pages to Read </NavLink>
         </li>
     </>
     return (
