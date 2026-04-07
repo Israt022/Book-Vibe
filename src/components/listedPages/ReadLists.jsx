@@ -1,18 +1,53 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BookContext } from '../../context/BookProvider';
 import { MdLocationOn } from 'react-icons/md';
-import { FaUserFriends } from 'react-icons/fa';
+import { FaBookOpen, FaUserFriends } from 'react-icons/fa';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 
-const ReadLists = () => {
+const ReadLists = ({sortBooks}) => {
     const {storeBook} = useContext(BookContext);
-    console.log(storeBook);
+    const[filterReadBook,setFilterReadBook] = useState(storeBook);
+    useEffect(() => {
+        if(sortBooks){
+            if(sortBooks === 'pages'){
+                const sortPage = [...storeBook].sort((a,b) => a.totalPages - b.totalPages);
+                setFilterReadBook(sortPage);
+            }else if(sortBooks === 'rating'){
+                const sortRating = [...storeBook].sort((a,b) => a.rating - b.rating);
+                setFilterReadBook(sortRating);
+            }
+        }
+    },[sortBooks,storeBook])
+    
+    if(filterReadBook.length == 0){
+                return<div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-4">
+          
+                        <div className="text-6xl text-gray-400">
+                            <FaBookOpen />
+                        </div>
+    
+                        <h2 className="text-2xl font-semibold text-gray-700">
+                            No Books Found
+                        </h2>
+    
+                        <p className="text-gray-500 max-w-md">
+                            You haven't added any books yet. Start exploring and add books to your
+                            reading list.
+                        </p>
+    
+                        <button className="btn btn-success rounded-full text-white">
+                            Explore Books
+                        </button>
+    
+                    </div>
+            }
+
     return (
         <div className='flex flex-col gap-5 my-15'>
             {
-                storeBook.map(book => {
+                filterReadBook.map((book) => {
                     return(
-                        <div className="border border-gray-300 rounded-xl p-6 flex flex-col lg:flex-row gap-6 items-center bg-base-100 shadow-sm">
+                        <div key={book.bookId} className="border border-gray-300 rounded-xl p-6 flex flex-col lg:flex-row gap-6 items-center bg-base-100 shadow-sm">
 
                             {/* Image */}
                             <div className="bg-base-200 p-6 rounded-lg">

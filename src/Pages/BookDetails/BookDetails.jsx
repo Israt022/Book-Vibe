@@ -24,8 +24,8 @@ const BookDetails = () => {
         yearOfPublishing
     } = expectedBook;
 
-    const {handleMarkAsRead,isAdded,storeBook,handleWishList} = useContext(BookContext);
-    console.log(storeBook);
+    const {handleMarkAsRead,isAdded,handleWishList} = useContext(BookContext);
+    // console.log(storeBook);
 
     
     return (
